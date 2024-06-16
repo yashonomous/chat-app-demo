@@ -56,11 +56,13 @@ const chatScreenSlice = createSlice({
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     postMessageAction: (state, action: PayloadAction<IPostMessage>) => {
+      action.payload;
       state.postMessage.isLoading = true;
       state.postMessage.error = '';
     },
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     postMessageSuccessAction: (state, action: PayloadAction<IMessage>) => {
+      action.payload;
       state.postMessage.isLoading = false;
     },
     postMessageErrorAction: (state, action: PayloadAction<string>) => {

@@ -77,9 +77,16 @@ function Home() {
   }, [user, dispatch]);
 
   return (
-    <Flex ref={ref} height={'100vh'} alignItems={'stretch'}>
+    <Flex ref={ref} data-testid="home" height={'100vh'} alignItems={'stretch'} width={'100%'}>
       <Dialog
+        id="welcome-dialog"
         // returnFocusRef={returnFocusRef}
+        sx={{
+          top: '30%',
+          margin: 'auto',
+          width: ['70% !important', '400px !important'],
+          height: ['fit-content !important', 'fit-content !important'],
+        }}
         isOpen={isOpen}
         onDismiss={() => {}}
         aria-labelledby="header">
@@ -95,6 +102,7 @@ function Home() {
             {USERS.map((user) => (
               <Flex
                 key={user.id}
+                data-testid={`user-${user.id}`}
                 sx={{
                   ':hover': {
                     cursor: 'pointer',
@@ -131,7 +139,7 @@ function Home() {
 
       <Sidebar />
 
-      {selectedChatUser ? <ChatScreen /> : t('Welcome to the chat app!')}
+      {selectedChatUser ? <ChatScreen /> : t('welcome')}
     </Flex>
   );
 }

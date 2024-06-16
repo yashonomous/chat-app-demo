@@ -1,4 +1,4 @@
-import { configureStore } from '@reduxjs/toolkit';
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import createSagaMiddleware from 'redux-saga';
 import chatScreenReducer from '../pages/Home/slice/chatScreenSlice';
 import chatSidebarReducer from '../pages/Home/slice/chatSidebarSlice';
@@ -18,7 +18,21 @@ export const store = configureStore({
 
 sagaMiddleware.run(rootSaga);
 
-// Infer the `RootState` and `AppDispatch` types from the store itself
 export type RootState = ReturnType<typeof store.getState>;
-// Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
 export type AppDispatch = typeof store.dispatch;
+
+// Create the root reducer separately so we can extract the RootState type
+const rootReducer = combineReducers({
+  globalSlice: globalReducer,
+  chatSidebarSlice: chatSidebarReducer,
+  chatScreenSlice: chatScreenReducer,
+});
+
+export const setupStore = (preloadedState?: Partial<RootState>) => {
+  return configureStore({
+    reducer: rootReducer,
+    preloadedState,
+  });
+};
+
+export type AppStore = ReturnType<typeof setupStore>;

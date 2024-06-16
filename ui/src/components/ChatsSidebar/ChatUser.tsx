@@ -17,14 +17,24 @@ const ChatUser: React.FC<IChatUserProps> = ({ chatUser, selected }) => {
         gap: theme.theme?.space[3],
         borderRadius: theme.theme?.radii.sm,
       }}
-      padding={theme.theme?.space[2]}
+      paddingY={theme.theme?.space[2]}
+      paddingX={[
+        theme.theme?.space[2],
+        theme.theme?.space[2],
+        theme.theme?.space[2],
+        theme.theme?.space[3],
+      ]}
       backgroundColor={selected ? theme.theme?.colors?.gray?.bg : 'transparent'}>
       <Box>
         <Avatar
           sx={{
             borderRadius: '25%',
           }}
-          size={50}
+          size={{
+            narrow: 30,
+            regular: 40,
+            wide: 50,
+          }}
           src={
             chatUser.avatar
               ? chatUser.avatar
@@ -62,7 +72,7 @@ const ChatUser: React.FC<IChatUserProps> = ({ chatUser, selected }) => {
               sx={{
                 background: label.bgColor,
                 color: label.textColor,
-                fontSize: theme.theme?.fontSizes[0],
+                fontSize: ['8px', '8px', '10px', '10px'],
                 paddingX: theme.theme?.space[2],
               }}
               size="small">

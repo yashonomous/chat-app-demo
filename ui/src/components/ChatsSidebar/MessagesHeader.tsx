@@ -7,8 +7,6 @@ const MessagesHeader = () => {
   const theme = useTheme();
   const { t } = useTranslation();
 
-  console.log('theme', theme);
-
   return (
     <Box>
       <Flex justifyContent={'space-between'} alignItems={'center'}>

@@ -22,36 +22,12 @@ const initialState: Theme = {
     white: '#fff',
     black: '#000',
   },
-  // colorSchemes: {
-  //   light: {
-  //     // colors: {
-  //     //   btn: {
-  //     //     bg: '#625ef0',
-  //     //   },
-  //     // },
-  //     gray: {
-  //       light: '#edf2f6',
-  //       bg: '#edf2f6',
-  //     },
-  //   },
-  // },
   radii: {
     xs: '5px',
     sm: '10px',
     md: '20px',
     lg: '30px',
   },
-  // fontSizes: {
-  //   0: '12px',
-  //   1: 14,
-  //   2: 16,
-  //   3: 24,
-  //   4: 32,
-  //   5: 48,
-  //   6: 64,
-  //   7: 96,
-  //   8: 128,
-  // },
   fontWeights: {
     normal: 400,
     bold: 700,

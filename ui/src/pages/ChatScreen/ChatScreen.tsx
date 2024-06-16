@@ -49,7 +49,7 @@ const ChatScreen: React.FC<ChatScreenProps> = () => {
   }, [dispatch]);
 
   return (
-    <Flex flex={0.65} flexDirection={'column'}>
+    <Flex flex={1} flexDirection={'column'}>
       <ChatScreenHeader />
       <ChatArea />
       <SendMessage />

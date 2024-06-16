@@ -30,9 +30,9 @@ const Message: React.ForwardRefExoticComponent<IMessageProps & RefAttributes<HTM
             borderRadius: theme.theme?.radii.sm,
             // boxShadow: '0px 0px 5px rgba(0, 0, 0, 0.1)',
           }}
-          maxWidth={'40%'}
-          paddingY={theme.theme?.space[2]}
-          paddingX={theme.theme?.space[3]}
+          maxWidth={'80%'}
+          paddingY={[theme.theme?.space[1], theme.theme?.space[2], theme.theme?.space[2]]}
+          paddingX={[theme.theme?.space[2], theme.theme?.space[2], theme.theme?.space[3]]}
           marginLeft={message.name === user?.name ? 'auto' : ''}
           bg={
             message.name === user?.name
@@ -43,16 +43,27 @@ const Message: React.ForwardRefExoticComponent<IMessageProps & RefAttributes<HTM
             sx={{
               gap: theme.theme?.space[8],
             }}
+            marginRight={[50, 60, 80]}
+            flex={1}
             justifyContent={'space-between'}>
-            <Text
-              color={
-                message.name === user?.name
-                  ? theme.theme?.colors?.white
-                  : theme.theme?.colors?.black
-              }>
-              {message.text}
-            </Text>
-            <Box />
+            <Box flex={1}>
+              <Text
+                fontSize={[
+                  '10px',
+                  theme.theme?.fontSizes[0],
+                  theme.theme?.fontSizes[0],
+                  theme.theme?.fontSizes[1],
+                ]}
+                color={
+                  message.name === user?.name
+                    ? theme.theme?.colors?.white
+                    : theme.theme?.colors?.black
+                }>
+                {message.text}
+              </Text>
+            </Box>
+
+            {/* <Box /> */}
           </Flex>
 
           <Text
@@ -63,7 +74,7 @@ const Message: React.ForwardRefExoticComponent<IMessageProps & RefAttributes<HTM
               //   left: 200,
               // alignSelf: 'end',
             }}
-            fontSize={'10px'}
+            fontSize={['8px', '8px', '10px']}
             color={theme.theme?.colors?.gray.main}>
             {getTime(message.dateAdded)}
           </Text>

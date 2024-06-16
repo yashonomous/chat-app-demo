@@ -18,7 +18,16 @@ const ChatsSidebar: React.FC = () => {
   const { chats, selectedChatUser } = chatSidebarState;
 
   return (
-    <Box paddingX={[theme.theme?.space[2], theme.theme?.space[3], theme.theme?.space[4]]} flex={1}>
+    <Box
+      data-testid="chats-sidebar"
+      paddingX={[
+        theme.theme?.space[2],
+        theme.theme?.space[2],
+        theme.theme?.space[2],
+        theme.theme?.space[3],
+      ]}
+      // bg="red"
+      flex={1}>
       <Flex
         sx={{
           gap: theme.theme?.space[3],
@@ -44,6 +53,7 @@ const ChatsSidebar: React.FC = () => {
               flexDirection={'column'}>
               {chats.map((chatUser) => (
                 <Box
+                  key={chatUser.id}
                   sx={{
                     ':hover': {
                       cursor: 'pointer',

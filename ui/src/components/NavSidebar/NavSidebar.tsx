@@ -32,13 +32,18 @@ const NAV_ITEMS = [
   },
 ];
 
-const NavSidebar: React.FC = () => {
+interface NavSidebarProps {
+  setShowOverlaySidebar: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const NavSidebar: React.FC<NavSidebarProps> = ({ setShowOverlaySidebar }) => {
   const theme = useTheme();
 
-  const [selected, setSelected] = useState<string>(NAV_ITEMS[0].label);
+  const [selected, setSelected] = useState<string>(NAV_ITEMS[1].label);
 
   return (
     <Box
+      data-testid="nav-sidebar"
       padding={2}
       sx={{
         borderRight: `1px solid ${theme.theme?.colors.gray.light}`,
@@ -69,13 +74,20 @@ const NavSidebar: React.FC = () => {
           flexDirection={'column'}>
           {NAV_ITEMS.map((navItem) => (
             <Box
+              key={navItem.label}
               sx={{
                 ':hover': {
                   cursor: 'pointer',
                 },
               }}
               tabIndex={0}
-              onClick={() => setSelected(navItem.label)}>
+              onClick={() => {
+                setSelected(navItem.label);
+
+                if (navItem.label === 'Chats') {
+                  setShowOverlaySidebar((prev) => !prev);
+                }
+              }}>
               <Octicon
                 icon={navItem.icon}
                 size={28}
