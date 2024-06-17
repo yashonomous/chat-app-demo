@@ -1,18 +1,22 @@
 import { PayloadAction } from '@reduxjs/toolkit';
-import { AxiosResponse } from 'axios';
+import { AxiosError, AxiosResponse } from 'axios';
 import { put, takeEvery, takeLatest } from 'redux-saga/effects';
 import axiosInstance from '../../../axios/axios';
 import { IPostMessage } from '../../../store/types/chatScreenTypes';
 import { IMessage, chatScreenSliceActions } from './chatScreenSlice';
 
 // Generator function
-function* getMessagesSaga() {
+export function* getMessagesSaga() {
   try {
-    // You can also export the axios call as a function.
     const response: AxiosResponse<Array<IMessage>> = yield axiosInstance.get(`/comments`);
+
     yield put(chatScreenSliceActions.getMessagesSuccessAction(response.data));
   } catch (error) {
-    yield put(chatScreenSliceActions.getMessagesErrorAction(error as string));
+    yield put(
+      chatScreenSliceActions.getMessagesErrorAction({
+        message: (error as AxiosError).message,
+      })
+    );
   }
 }
 

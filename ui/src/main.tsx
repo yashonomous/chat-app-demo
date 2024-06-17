@@ -5,6 +5,7 @@ import App from './App.tsx';
 import './i18n.tsx';
 import { store } from './store/store.tsx';
 
+import ErrorBoundary from './components/common/ErrorBoundary/ErrorBoundary.tsx';
 import Loader from './components/common/Loader/Loader.tsx';
 import './main.css';
 
@@ -23,7 +24,9 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
           size="large"
         />
       }>
-      <App />
+      <ErrorBoundary>
+        <App />
+      </ErrorBoundary>
     </Suspense>
   </Provider>
 

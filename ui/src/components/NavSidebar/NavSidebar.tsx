@@ -63,6 +63,7 @@ const NavSidebar: React.FC<NavSidebarProps> = ({ hideSidebar, setShowOverlaySide
         flexDirection={'column'}
         alignItems={'center'}>
         <Flex
+          aria-label="logo"
           sx={{
             borderRadius: theme.theme?.radii.sm,
           }}
@@ -75,6 +76,7 @@ const NavSidebar: React.FC<NavSidebarProps> = ({ hideSidebar, setShowOverlaySide
           </Text>
         </Flex>
         <Flex
+          aria-label="nav-items"
           sx={{
             gap: theme.theme?.space[3],
           }}
@@ -82,7 +84,9 @@ const NavSidebar: React.FC<NavSidebarProps> = ({ hideSidebar, setShowOverlaySide
           {NAV_ITEMS.map((navItem) => (
             <ShakeIcon
               key={navItem.label}
+              data-testid={`nav-item-${navItem.label}`}
               className={navItem.label === 'Chats' && shake ? 'shake' : ''}
+              aria-selected={selected === navItem.label}
               tabIndex={0}
               onClick={() => {
                 setSelected(navItem.label);

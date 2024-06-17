@@ -70,6 +70,8 @@ export function renderWithProviders(
   function Wrapper({ children }: PropsWithChildren): JSX.Element {
     const mergedTheme = preloadedState.globalSlice?.theme
       ? deepmerge(theme, preloadedState.globalSlice.theme)
+      : store.getState()?.globalSlice?.theme
+      ? deepmerge(theme, store.getState()?.globalSlice?.theme)
       : theme;
     return (
       <Provider store={store}>

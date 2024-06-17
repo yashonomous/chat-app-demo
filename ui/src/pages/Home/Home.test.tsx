@@ -1,6 +1,6 @@
 import { initialMockStoreState, renderWithProviders } from '../../test/testUtils';
 
-import { act, screen, within } from '@testing-library/react';
+import { act, fireEvent, screen, within } from '@testing-library/react';
 import Home from './Home';
 
 describe('HomeScreen', () => {
@@ -36,18 +36,34 @@ describe('HomeScreen', () => {
   });
 });
 
-describe('ChatScreen', () => {
-  test('should render ChatScreen component', async () => {
+describe('HomeScreen', () => {
+  test('when user-1 seleceted', async () => {
     renderWithProviders(<Home />, {
       preloadedState: initialMockStoreState,
     });
 
     const user = screen.getByTestId('user-1');
+    fireEvent.click(user);
 
-    act(() => {
-      user.click();
+    await act(async () => {
+      const chatUser = await screen.findByTestId('chat-user-2');
+      expect(chatUser).toBeInTheDocument();
+      expect(within(chatUser).getByText(/florencio dorrance/i)).toBeInTheDocument();
+    });
+  });
+
+  test('when user-2 seleceted', async () => {
+    renderWithProviders(<Home />, {
+      preloadedState: initialMockStoreState,
     });
 
-    // await screen.findByText(/john smith/i);
+    const user = screen.getByTestId('user-2');
+    fireEvent.click(user);
+
+    await act(async () => {
+      const chatUser = await screen.findByTestId('chat-user-1');
+      expect(chatUser).toBeInTheDocument();
+      expect(within(chatUser).getByText(/elmer laverty/i)).toBeInTheDocument();
+    });
   });
 });

@@ -24,15 +24,15 @@ const SendMessage = () => {
       })
     );
 
-    // dispatch(
-    //   chatScreenSliceActions.addMessage({
-    //     id: 'message' + Math.random(),
-    //     name: user?.name ?? '',
-    //     text: message,
-    //     dateAdded: Date.now(),
-    //     status: 1,
-    //   })
-    // );
+    dispatch(
+      chatScreenSliceActions.addMessage({
+        id: 'message' + Math.random(),
+        name: user?.name ?? '',
+        text: message,
+        dateAdded: Date.now(),
+        status: 1,
+      })
+    );
 
     setMessage('');
   };

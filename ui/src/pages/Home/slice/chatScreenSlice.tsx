@@ -49,9 +49,14 @@ const chatScreenSlice = createSlice({
       state.messages.isLoading = false;
       state.messages.data = action.payload;
     },
-    getMessagesErrorAction: (state, action: PayloadAction<string>) => {
+    getMessagesErrorAction: (
+      state,
+      action: PayloadAction<{
+        message: string;
+      }>
+    ) => {
       state.messages.isLoading = false;
-      state.messages.error = action.payload;
+      state.messages.error = action.payload.message;
     },
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars

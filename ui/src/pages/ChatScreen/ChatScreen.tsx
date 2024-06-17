@@ -1,14 +1,17 @@
 import React, { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { Flex } from 'rebass';
 import ChatArea from '../../components/ChatScreen/ChatArea';
 import ChatScreenHeader from '../../components/ChatScreen/ChatScreenHeader';
 import SendMessage from '../../components/ChatScreen/SendMessage';
+import { authStateSelector } from '../../store/globalSlice/authSlice';
 import { useAppDispatch } from '../../store/hooks';
 import { chatScreenSliceActions } from '../Home/slice/chatScreenSlice';
 
 interface ChatScreenProps {}
 
 const ChatScreen: React.FC<ChatScreenProps> = () => {
+  const { user } = useSelector(authStateSelector);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -24,7 +27,7 @@ const ChatScreen: React.FC<ChatScreenProps> = () => {
       eventSource.onmessage = (event) => {
         const parsedData = JSON.parse(event.data);
 
-        if (Object.keys(parsedData).length > 0) {
+        if (Object.keys(parsedData).length > 0 && parsedData.name !== user?.name) {
           dispatch(chatScreenSliceActions.addMessage(parsedData));
         }
       };
@@ -46,7 +49,7 @@ const ChatScreen: React.FC<ChatScreenProps> = () => {
     return () => {
       eventSource.close();
     };
-  }, [dispatch]);
+  }, [dispatch, user?.name]);
 
   return (
     <Flex flex={1} flexDirection={'column'}>

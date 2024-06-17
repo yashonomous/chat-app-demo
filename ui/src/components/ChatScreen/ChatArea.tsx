@@ -28,7 +28,12 @@ const ChatArea = () => {
   const { messages } = useAppSelector(chatScreenStateSelector);
 
   return (
-    <Box flexGrow={1} minHeight={0} padding={theme.theme?.space[2]} overflow={'auto'}>
+    <Box
+      data-testid={'chat-area'}
+      flexGrow={1}
+      minHeight={0}
+      padding={theme.theme?.space[2]}
+      overflow={'auto'}>
       <FlipMove
         style={{
           display: 'flex',

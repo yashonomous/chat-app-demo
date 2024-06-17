@@ -51,10 +51,8 @@ const CollapsibleChatsSidebar: React.FC<IChatsSidebarProps> = ({
   handleOverlayClick,
 }) => {
   const theme = useTheme();
-  const chatSidebarState = useAppSelector(chatSidebarStateSelector);
+  const { chats, selectedChatUser } = useAppSelector(chatSidebarStateSelector);
   const dispatch = useAppDispatch();
-
-  const { chats, selectedChatUser } = chatSidebarState;
 
   return (
     <Box id="overlay-sidebar">

@@ -2,11 +2,11 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 import { RootState } from '../store';
 
-interface IUser {
+export interface IUser {
   id: string | number;
   name: string;
   email: string;
-  avatar?: string;
+  avatar?: string | undefined;
 }
 
 interface IAuthState {

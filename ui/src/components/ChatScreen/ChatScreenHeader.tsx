@@ -12,6 +12,7 @@ const ChatScreenHeader = () => {
 
   return (
     <Box
+      aria-label="chat-screen-header"
       sx={{
         borderBottom: `1px solid ${theme.theme?.colors.gray.light}`,
       }}

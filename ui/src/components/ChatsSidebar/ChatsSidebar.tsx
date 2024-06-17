@@ -45,7 +45,11 @@ const ChatsSidebar: React.FC = () => {
               gap: theme.theme?.space[3],
             }}
             flexDirection={'column'}>
-            <Input placeholder="Search Messages" />
+            <Input
+              name="search-messages"
+              placeholder="Search Messages"
+              aria-label="search-messages"
+            />
             <Flex
               sx={{
                 gap: theme.theme?.space[3],
@@ -54,6 +58,7 @@ const ChatsSidebar: React.FC = () => {
               {chats.map((chatUser) => (
                 <Box
                   key={chatUser.id}
+                  data-testid={`chat-user-${chatUser.id}`}
                   sx={{
                     ':hover': {
                       cursor: 'pointer',

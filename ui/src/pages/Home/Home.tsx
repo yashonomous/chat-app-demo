@@ -5,9 +5,13 @@ import { Flex } from 'rebass';
 import Sidebar from '../../components/Sidebar/Sidebar';
 import { authSliceActions, authStateSelector } from '../../store/globalSlice/authSlice';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { USERS } from '../../utils/constants';
+import { CHATS, USERS } from '../../utils/constants';
 import ChatScreen from '../ChatScreen/ChatScreen';
-import { chatSidebarSliceActions, chatSidebarStateSelector } from './slice/chatSidebarSlice';
+import {
+  IChatUser,
+  chatSidebarSliceActions,
+  chatSidebarStateSelector,
+} from './slice/chatSidebarSlice';
 
 function Home() {
   const theme = useTheme();
@@ -24,51 +28,9 @@ function Home() {
       dispatch(
         chatSidebarSliceActions.setChats(
           user.id === 2
-            ? [
-                {
-                  id: 1,
-                  name: 'Elmer Laverty',
-                  lastMessage: 'Hello',
-                  avatar: 'https://avatars.githubusercontent.com/u/92997159?v=4',
-                  time: '12m',
-                  unread: true,
-                  labels: [
-                    {
-                      name: 'Question',
-                      bgColor: '#feeac7',
-                      textColor: '#e58e4e',
-                    },
-                    {
-                      name: 'Help Wanted',
-                      bgColor: '#c5f6d6',
-                      textColor: '#6dc090',
-                    },
-                  ],
-                },
-              ]
+            ? ([CHATS.at(0)] as Array<IChatUser>)
             : user.id === 1
-            ? [
-                {
-                  id: 2,
-                  name: 'Florencio Dorance',
-                  lastMessage: 'Hello',
-                  avatar: 'https://avatars.githubusercontent.com/u/92997199?v=4',
-                  time: '12m',
-                  unread: true,
-                  labels: [
-                    {
-                      name: 'Question',
-                      bgColor: '#feeac7',
-                      textColor: '#e58e4e',
-                    },
-                    {
-                      name: 'Help Wanted',
-                      bgColor: '#c5f6d6',
-                      textColor: '#6dc090',
-                    },
-                  ],
-                },
-              ]
+            ? ([CHATS.at(1)] as Array<IChatUser>)
             : []
         )
       );
@@ -126,7 +88,7 @@ function Home() {
                     borderRadius: '25%',
                   }}
                   size={50}
-                  src={user.avatar}
+                  src={user.avatar || ''}
                   alt={user.name}
                 />
                 <Text>{user.name}</Text>
