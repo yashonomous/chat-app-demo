@@ -48,28 +48,14 @@ const Sidebar: React.FC<SidebarProps> = () => {
       sx={{
         borderRight: `1px solid ${theme.theme?.colors.gray.light}`,
       }}>
-      <NavSidebar setShowOverlaySidebar={setShowOverlaySidebar} />
+      <NavSidebar hideSidebar={hideSidebar} setShowOverlaySidebar={setShowOverlaySidebar} />
       {hideSidebar ? (
-        <>
-          {/* <Box
-            tabIndex={0}
-            onClick={() => {
-              if (hideSidebar) {
-                setShowOverlaySidebar(true);
-              }
-            }}>
-            <Octicon icon={SidebarCollapseIcon} />
-          </Box> */}
-
-          {
-            <CollapsibleChatsSidebar
-              showOverlaySidebar={showOverlaySidebar}
-              handleOverlayClick={() => {
-                setShowOverlaySidebar(false);
-              }}
-            />
-          }
-        </>
+        <CollapsibleChatsSidebar
+          showOverlaySidebar={showOverlaySidebar}
+          handleOverlayClick={() => {
+            setShowOverlaySidebar(false);
+          }}
+        />
       ) : (
         <ChatsSidebar />
       )}

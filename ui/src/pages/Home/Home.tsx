@@ -1,9 +1,8 @@
-import { Flex } from 'rebass';
-import Sidebar from '../../components/Sidebar/Sidebar';
-
 import { Avatar, Dialog, Text, useTheme } from '@primer/react';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Flex } from 'rebass';
+import Sidebar from '../../components/Sidebar/Sidebar';
 import { authSliceActions, authStateSelector } from '../../store/globalSlice/authSlice';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { USERS } from '../../utils/constants';

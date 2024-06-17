@@ -1,9 +1,10 @@
-import { Spinner, useTheme } from '@primer/react';
+import { useTheme } from '@primer/react';
 import { useEffect, useRef } from 'react';
 import FlipMove from 'react-flip-move';
 import { Box } from 'rebass';
 import { chatScreenStateSelector } from '../../pages/Home/slice/chatScreenSlice';
 import { useAppSelector } from '../../store/hooks';
+import Loader from '../common/Loader/Loader';
 import Message from '../common/Message/Message';
 
 const AlwaysScrollToBottom = () => {
@@ -33,12 +34,19 @@ const ChatArea = () => {
           display: 'flex',
           flexDirection: 'column',
           gap: theme.theme?.space[2],
+          ...(messages.isLoading && {
+            height: '100%',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }),
         }}>
         {messages.isLoading ? (
-          <Spinner
-            sx={{
-              margin: 'auto',
-            }}
+          <Loader
+            sx={
+              {
+                // margin: 'auto',
+              }
+            }
             size="large"
           />
         ) : (

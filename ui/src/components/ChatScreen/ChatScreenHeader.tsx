@@ -67,7 +67,7 @@ const ChatScreenHeader = () => {
             leadingVisual={DeviceMobileIcon}
             aria-label="Call User"
             onClick={() => {
-              i18n.changeLanguage('de');
+              i18n.changeLanguage(i18n.language === 'en' ? 'de' : 'en');
             }}>
             <Text color={theme.theme?.colors.primary.main}>Call</Text>
           </Button>

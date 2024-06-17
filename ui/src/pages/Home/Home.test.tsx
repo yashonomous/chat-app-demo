@@ -1,7 +1,8 @@
 import { initialMockStoreState, renderWithProviders } from '../../test/testUtils';
 
-import { screen, within } from '@testing-library/react';
+import { act, screen, within } from '@testing-library/react';
 import Home from './Home';
+
 describe('HomeScreen', () => {
   test('should render dialog', async () => {
     renderWithProviders(<Home />, {
@@ -32,5 +33,21 @@ describe('HomeScreen', () => {
 
     const loginUsers = screen.getAllByTestId(/user-\d+/);
     expect(loginUsers).toHaveLength(2);
+  });
+});
+
+describe('ChatScreen', () => {
+  test('should render ChatScreen component', async () => {
+    renderWithProviders(<Home />, {
+      preloadedState: initialMockStoreState,
+    });
+
+    const user = screen.getByTestId('user-1');
+
+    act(() => {
+      user.click();
+    });
+
+    // await screen.findByText(/john smith/i);
   });
 });

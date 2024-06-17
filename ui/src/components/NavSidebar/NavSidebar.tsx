@@ -1,45 +1,52 @@
-import {
-  CalendarIcon,
-  CommentIcon,
-  HomeIcon,
-  ProjectIcon,
-  SearchIcon,
-} from '@primer/octicons-react';
+import emotionStyled from '@emotion/styled';
 import { Octicon, Text, useTheme } from '@primer/react';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, Flex } from 'rebass';
-
-const NAV_ITEMS = [
-  {
-    label: 'Home',
-    icon: HomeIcon,
-  },
-  {
-    label: 'Chats',
-    icon: CommentIcon,
-  },
-  {
-    label: 'Projects',
-    icon: ProjectIcon,
-  },
-  {
-    label: 'Search',
-    icon: SearchIcon,
-  },
-  {
-    label: 'Calendar',
-    icon: CalendarIcon,
-  },
-];
+import { NAV_ITEMS } from '../../utils/constants';
 
 interface NavSidebarProps {
+  hideSidebar: boolean;
   setShowOverlaySidebar: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const NavSidebar: React.FC<NavSidebarProps> = ({ setShowOverlaySidebar }) => {
+const ShakeIcon = emotionStyled.div`
+  @keyframes shake {
+    0%,
+    100% {
+      transform: translateX(0);
+    }
+    20%,
+    60% {
+      transform: translateX(-10px);
+    }
+    40%,
+    80% {
+      transform: translateX(10px);
+    }
+  }
+
+  &.shake {
+    animation: shake 0.5s ease-in-out;
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
+const NavSidebar: React.FC<NavSidebarProps> = ({ hideSidebar, setShowOverlaySidebar }) => {
   const theme = useTheme();
 
   const [selected, setSelected] = useState<string>(NAV_ITEMS[1].label);
+  const [shake, setShake] = useState(false);
+
+  useEffect(() => {
+    if (hideSidebar) {
+      setShake(true);
+      const timer = setTimeout(() => setShake(false), 500); // Stop shaking after 0.5s
+      return () => clearTimeout(timer);
+    }
+  }, [hideSidebar]);
 
   return (
     <Box
@@ -73,13 +80,9 @@ const NavSidebar: React.FC<NavSidebarProps> = ({ setShowOverlaySidebar }) => {
           }}
           flexDirection={'column'}>
           {NAV_ITEMS.map((navItem) => (
-            <Box
+            <ShakeIcon
               key={navItem.label}
-              sx={{
-                ':hover': {
-                  cursor: 'pointer',
-                },
-              }}
+              className={navItem.label === 'Chats' && shake ? 'shake' : ''}
               tabIndex={0}
               onClick={() => {
                 setSelected(navItem.label);
@@ -97,7 +100,7 @@ const NavSidebar: React.FC<NavSidebarProps> = ({ setShowOverlaySidebar }) => {
                     : theme.theme?.colors.black
                 }
               />
-            </Box>
+            </ShakeIcon>
           ))}
         </Flex>
       </Flex>
