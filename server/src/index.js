@@ -147,6 +147,12 @@ router.put('/comment/:id', async (ctx, next) => {
 
 app.use(router.routes()).use(router.allowedMethods());
 
+// Default route (catch-all)
+app.use(async (ctx) => {
+  ctx.status = 404; // Set the status to 404
+  ctx.body = 'Page Not Found'; // Customize your default response
+});
+
 console.log(chalk.yellow('starting server'));
 app.listen(3001);
 console.log(chalk.green('server started'));
