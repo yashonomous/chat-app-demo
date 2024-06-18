@@ -23,8 +23,10 @@ const SendMessage = () => {
     e.preventDefault();
 
     if (!currentMessageToEdit) {
+      const oldId = 'message' + Math.random();
       dispatch(
         chatScreenSliceActions.postMessageAction({
+          oldId,
           name: user?.name ?? '',
           text: message,
         })
@@ -32,7 +34,8 @@ const SendMessage = () => {
 
       dispatch(
         chatScreenSliceActions.addMessage({
-          id: 'message' + Math.random(),
+          id: oldId,
+          tempId: oldId,
           name: user?.name ?? '',
           text: message,
           dateAdded: Date.now(),

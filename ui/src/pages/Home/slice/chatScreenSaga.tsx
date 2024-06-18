@@ -28,6 +28,12 @@ function* postMessageSaga(action: PayloadAction<IPostMessage>) {
       name: action.payload.name,
       text: action.payload.text,
     });
+    yield put(
+      chatScreenSliceActions.updateAddedMessageId({
+        oldId: action.payload.oldId,
+        newId: response.data.id,
+      })
+    );
     yield put(chatScreenSliceActions.postMessageSuccessAction(response.data));
   } catch (error) {
     yield put(chatScreenSliceActions.postMessageErrorAction(error as string));

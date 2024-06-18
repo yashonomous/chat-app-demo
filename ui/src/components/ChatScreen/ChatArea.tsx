@@ -67,7 +67,9 @@ const ChatArea = () => {
               size="large"
             />
           ) : (
-            messages.data?.map((message) => <Message key={message.id} message={message} />)
+            messages.data?.map((message) => (
+              <Message key={message.tempId || message.id} message={message} />
+            ))
           )}
         </FlipMove>
       )}

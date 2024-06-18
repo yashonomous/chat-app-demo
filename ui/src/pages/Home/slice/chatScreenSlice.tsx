@@ -5,6 +5,7 @@ import { IEditMessage, IPostMessage } from '../../../store/types/chatScreenTypes
 
 export interface IMessage {
   id: string;
+  tempId?: string;
   name: string;
   text: string;
   dateAdded: number;
@@ -87,6 +88,23 @@ const chatScreenSlice = createSlice({
     },
     setScrollToBottom: (state, action: PayloadAction<boolean>) => {
       state.scrollToBotton = action.payload;
+    },
+    updateAddedMessageId: (
+      state,
+      action: PayloadAction<{
+        oldId: string;
+        newId: string;
+      }>
+    ) => {
+      state.messages.data = state.messages.data?.map((message) => {
+        if (message.tempId === action.payload.oldId) {
+          return {
+            ...message,
+            id: action.payload.newId,
+          };
+        }
+        return message;
+      });
     },
 
     getMessagesAction: (state) => {
