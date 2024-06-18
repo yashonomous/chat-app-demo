@@ -36,7 +36,7 @@ const editComment = async (comments, editedComment) => {
 
 const getComments = async () =>
   new Promise((res) => {
-    fs.readFile('./src/comments.json', 'utf8', (err, data) => {
+    fs.readFile('./api/comments.json', 'utf8', (err, data) => {
       if (err) throw err;
       res(JSON.parse(data));
     });
@@ -44,7 +44,7 @@ const getComments = async () =>
 
 const writeComments = async (comments) =>
   new Promise((res) => {
-    fs.writeFile('./src/comments.json', JSON.stringify(comments), (err, data) => {
+    fs.writeFile('./api/comments.json', JSON.stringify(comments), (err, data) => {
       if (err) throw err;
       res();
     });
