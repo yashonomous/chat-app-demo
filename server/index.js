@@ -5,7 +5,7 @@ const cors = require('@koa/cors');
 const error = require('koa-json-error');
 const chalk = require('chalk');
 const { PassThrough } = require('stream');
-const { addComment, deleteComment, editComment, getComments } = require('./commentsService');
+const { addComment, deleteComment, editComment, getComments } = require('./src/commentsService');
 
 const app = new Koa();
 const router = new Router();
@@ -19,6 +19,12 @@ app.use(cors());
 app.use(error());
 
 let clients = [];
+
+router.get('/', async (ctx, next) => {
+  await fakeSleep(standardSleep);
+
+  ctx.body = { message: 'Welcome to chat app backend' };
+});
 
 router.get('/status', async (ctx, next) => {
   await fakeSleep(standardSleep);
@@ -77,7 +83,7 @@ router.get('/commentsEvents', async (ctx, next) => {
   // ctx.respond = false;
 });
 
-router.get('/comments', async (ctx, next) => {
+router.get('/allComments', async (ctx, next) => {
   await fakeSleep(standardSleep);
 
   ctx.body = await getComments();
@@ -154,5 +160,7 @@ app.use(async (ctx) => {
 });
 
 console.log(chalk.yellow('starting server'));
-app.listen(3001);
+// app.listen(3001);
 console.log(chalk.green('server started'));
+
+module.exports = app.callback();
