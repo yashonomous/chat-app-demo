@@ -2,5 +2,9 @@
   "welcome": "Bienvenido a la aplicación de chat",
   "messages": "Mensajes",
   "selectUser": "Seleccione un usuario",
-  "changeLanguage": "Cambiar idioma"
+  "changeLanguage": "Cambiar idioma",
+  "lightMode": "Modo de luz",
+  "darkMode": "Modo oscuro",
+  "edited": "Editado",
+  "noMessages": "¡Comience a chatear!"
 }

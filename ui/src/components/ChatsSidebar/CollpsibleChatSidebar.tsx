@@ -1,5 +1,6 @@
 import emotionStyled from '@emotion/styled';
 import { useTheme } from '@primer/react';
+import { Theme } from '@primer/react/lib-esm/ThemeProvider';
 import React from 'react';
 import { Box, Flex } from 'rebass';
 import {
@@ -19,6 +20,7 @@ interface IChatsSidebarProps {
 
 interface SidebarContainerProps {
   isOpen: boolean;
+  theme: Theme;
 }
 
 const SidebarContainer = emotionStyled.div<SidebarContainerProps>`
@@ -28,7 +30,10 @@ const SidebarContainer = emotionStyled.div<SidebarContainerProps>`
   height: 100%;
   width: 300px;
   z-index: 10;
-  background-color: white;
+  background-color: ${(props) =>
+    props.theme.colorMode === 'day'
+      ? props.theme.theme?.colors.white
+      : props.theme.theme?.colors.darkMode.bg};
   box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
   transform: ${(props) => (props.isOpen ? 'translateX(0)' : 'translateX(100%)')};
   transition: transform 0.3s ease-in-out;
@@ -37,7 +42,6 @@ const SidebarContainer = emotionStyled.div<SidebarContainerProps>`
 const StyledOverlay = emotionStyled(Overlay)<SidebarContainerProps>`
   opacity: ${(props) => (props.isOpen ? 1 : 0)};
   visibility: ${(props) => (props.isOpen ? 'visible' : 'hidden')};
-
 `;
 
 const CollapsibleChatsSidebar: React.FC<IChatsSidebarProps> = ({
@@ -50,7 +54,7 @@ const CollapsibleChatsSidebar: React.FC<IChatsSidebarProps> = ({
 
   return (
     <Box id="overlay-sidebar">
-      <SidebarContainer isOpen={showOverlaySidebar}>
+      <SidebarContainer theme={theme} isOpen={showOverlaySidebar}>
         <Flex
           sx={{
             gap: theme.theme?.space[3],
@@ -101,7 +105,12 @@ const CollapsibleChatsSidebar: React.FC<IChatsSidebarProps> = ({
         </Flex>
       </SidebarContainer>
 
-      <StyledOverlay isOpen={showOverlaySidebar} tabIndex={0} onClick={handleOverlayClick} />
+      <StyledOverlay
+        theme={theme}
+        isOpen={showOverlaySidebar}
+        tabIndex={0}
+        onClick={handleOverlayClick}
+      />
     </Box>
   );
 };

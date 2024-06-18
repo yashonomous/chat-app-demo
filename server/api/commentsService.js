@@ -41,6 +41,10 @@ const getComments = async () =>
   new Promise((res) => {
     fs.readFile('./api/comments.json', 'utf8', (err, data) => {
       if (err) throw err;
+
+      if (!data) {
+        return res([]);
+      }
       res(JSON.parse(data));
     });
   });

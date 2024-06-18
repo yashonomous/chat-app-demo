@@ -1,4 +1,4 @@
-import { DeviceMobileIcon, GlobeIcon, MoonIcon } from '@primer/octicons-react';
+import { DeviceMobileIcon, GlobeIcon, MoonIcon, SunIcon } from '@primer/octicons-react';
 import { Avatar, Box as BoxWrapper, Button, Octicon, Text, Tooltip, useTheme } from '@primer/react';
 import { useTranslation } from 'react-i18next';
 import { Box, Flex } from 'rebass';
@@ -61,12 +61,12 @@ const ChatScreenHeader = () => {
             gap: theme.theme?.space[3],
           }}
           alignItems={'center'}>
-          <Tooltip direction="s" text={t('changeLanguage')}>
+          <Tooltip direction="s" text={theme.colorMode === 'day' ? t('lightMode') : t('darkMode')}>
             <Box
               onClick={() => {
                 theme.setColorMode(theme.colorMode === 'day' ? 'night' : 'day');
               }}>
-              <Octicon icon={MoonIcon} size={24} />
+              <Octicon icon={theme.colorMode === 'day' ? MoonIcon : SunIcon} size={24} />
             </Box>
           </Tooltip>
 

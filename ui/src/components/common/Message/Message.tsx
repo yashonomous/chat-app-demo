@@ -1,5 +1,6 @@
 import { PencilIcon, TrashIcon } from '@primer/octicons-react';
 import { Octicon, Text, useTheme } from '@primer/react';
+import { t } from 'i18next';
 import React, { RefAttributes, forwardRef, useState } from 'react';
 import { Box, Flex } from 'rebass';
 import { IMessage, chatScreenSliceActions } from '../../../pages/Home/slice/chatScreenSlice';
@@ -102,6 +103,19 @@ const Message: React.ForwardRefExoticComponent<IMessageProps & RefAttributes<HTM
 
               {/* <Box /> */}
             </Flex>
+
+            {message.dateAdded < message.dateEdited && (
+              <Text
+                sx={{
+                  position: 'absolute',
+                  top: 1,
+                  right: 2,
+                }}
+                fontSize={['8px', '8px', '10px']}
+                color={theme.theme?.colors?.gray.main}>
+                {t('edited')}
+              </Text>
+            )}
 
             <Text
               sx={{

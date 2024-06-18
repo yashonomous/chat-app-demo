@@ -181,7 +181,7 @@ router.put('/comment/:id', async (ctx, next) => {
       }
     });
 
-    ctx.body = newComment;
+    ctx.body = editedComment;
   } catch (err) {
     ctx.throw(500, 'Internal server error');
   }

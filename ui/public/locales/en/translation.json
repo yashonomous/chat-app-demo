@@ -2,5 +2,9 @@
   "welcome": "Welcome to the chat app!",
   "messages": "messages",
   "selectUser": "Select a user",
-  "changeLanguage": "Change language"
+  "changeLanguage": "Change language",
+  "lightMode": "Light mode",
+  "darkMode": "Dark mode",
+  "edited": "Edited",
+  "noMessages": "Start Chatting!"
 }
