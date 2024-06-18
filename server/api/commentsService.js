@@ -16,7 +16,10 @@ const addComment = async (comments, newComment) => {
 };
 
 const deleteComment = async (comments, commentId) => {
+  const deletedComment = comments.find((c) => c.id === commentId);
   await writeComments(comments.filter((c) => c.id !== commentId));
+
+  return deletedComment;
 };
 
 const editComment = async (comments, editedComment) => {

@@ -54,8 +54,12 @@ const NavSidebar: React.FC<NavSidebarProps> = ({ hideSidebar, setShowOverlaySide
       padding={2}
       sx={{
         borderRight: `1px solid ${theme.theme?.colors.gray.light}`,
-        boxShadow: '0px 0px 10px 0px rgba(0,0,0,0.1)',
-      }}>
+        boxShadow:
+          theme.colorMode === 'day'
+            ? '0px 0px 10px 0px rgba(0,0,0,0.1)'
+            : '0px 0px 10px 0px rgba(255,255,255,0.1)',
+      }}
+      bg={theme.colorMode === 'day' ? theme.theme?.colors.white : theme.theme?.colors.darkMode.bg}>
       <Flex
         sx={{
           gap: theme.theme?.space[5],
@@ -97,11 +101,13 @@ const NavSidebar: React.FC<NavSidebarProps> = ({ hideSidebar, setShowOverlaySide
               }}>
               <Octicon
                 icon={navItem.icon}
-                size={28}
+                size={25}
                 color={
                   selected === navItem.label
                     ? theme.theme?.colors.primary.main
-                    : theme.theme?.colors.black
+                    : theme.colorMode === 'day'
+                    ? theme.theme?.colors.black
+                    : theme.theme?.colors.white
                 }
               />
             </ShakeIcon>

@@ -1,45 +1,92 @@
 import { PaperAirplaneIcon } from '@primer/octicons-react';
 import { IconButton, useTheme } from '@primer/react';
-import { SyntheticEvent, useState } from 'react';
+import { SyntheticEvent, useEffect, useState } from 'react';
 import { Box } from 'rebass';
-import { chatScreenSliceActions } from '../../pages/Home/slice/chatScreenSlice';
+import {
+  chatScreenSliceActions,
+  chatScreenStateSelector,
+} from '../../pages/Home/slice/chatScreenSlice';
 import { authStateSelector } from '../../store/globalSlice/authSlice';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import Input from '../common/Input/Input';
+import Overlay from '../common/Overlay/Overlay';
 
 const SendMessage = () => {
   const theme = useTheme();
   const dispatch = useAppDispatch();
   const { user } = useAppSelector(authStateSelector);
+  const { currentMessageToEdit } = useAppSelector(chatScreenStateSelector);
 
   const [message, setMessage] = useState('');
 
   const handleSendMessage = (e: SyntheticEvent) => {
     e.preventDefault();
 
-    dispatch(
-      chatScreenSliceActions.postMessageAction({
-        name: user?.name ?? '',
-        text: message,
-      })
-    );
+    if (!currentMessageToEdit) {
+      dispatch(
+        chatScreenSliceActions.postMessageAction({
+          name: user?.name ?? '',
+          text: message,
+        })
+      );
 
-    dispatch(
-      chatScreenSliceActions.addMessage({
-        id: 'message' + Math.random(),
-        name: user?.name ?? '',
-        text: message,
-        dateAdded: Date.now(),
-        status: 1,
-      })
-    );
+      dispatch(
+        chatScreenSliceActions.addMessage({
+          id: 'message' + Math.random(),
+          name: user?.name ?? '',
+          text: message,
+          dateAdded: Date.now(),
+          dateEdited: Date.now(),
+          status: 1,
+        })
+      );
+    } else {
+      dispatch(
+        chatScreenSliceActions.editMessage({
+          id: currentMessageToEdit.id,
+          name: user?.name ?? '',
+          text: message,
+        })
+      );
+
+      dispatch(chatScreenSliceActions.setCurrentMessageToEdit(null));
+
+      dispatch(
+        chatScreenSliceActions.editMessageAction({
+          id: currentMessageToEdit.id,
+          name: user?.name ?? '',
+          text: message,
+        })
+      );
+    }
 
     setMessage('');
   };
 
+  useEffect(() => {
+    if (currentMessageToEdit) {
+      setMessage(currentMessageToEdit.text);
+    }
+  }, [currentMessageToEdit]);
+
   return (
-    <Box padding={theme.theme?.space[2]}>
-      <form style={{ display: 'flex', flex: 1 }} onSubmit={handleSendMessage}>
+    <Box
+      padding={theme.theme?.space[2]}
+      sx={{
+        position: 'relative',
+      }}>
+      <form
+        style={{
+          display: 'flex',
+          flex: 1,
+          ...(currentMessageToEdit && {
+            zIndex: 10,
+            position: 'fixed',
+            bottom: 20,
+            width: '50vw',
+          }),
+        }}
+        onSubmit={handleSendMessage}>
         <Input
           sx={{
             borderRadius: theme.theme?.radii.full,
@@ -48,6 +95,7 @@ const SendMessage = () => {
             flex: 1,
             marginRight: theme.theme?.space[2],
             bg: theme.theme?.colors.gray.light,
+            height: theme.theme?.space[7],
           }}
           placeholder="Type a message..."
           value={message}
@@ -70,6 +118,10 @@ const SendMessage = () => {
           // onClick={handleSendMessage}
         />
       </form>
+
+      {currentMessageToEdit && (
+        <Overlay onClick={() => dispatch(chatScreenSliceActions.setCurrentMessageToEdit(null))} />
+      )}
     </Box>
   );
 };

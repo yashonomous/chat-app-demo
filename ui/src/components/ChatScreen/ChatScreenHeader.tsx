@@ -1,5 +1,5 @@
-import { DeviceMobileIcon } from '@primer/octicons-react';
-import { Avatar, Button, Text, useTheme } from '@primer/react';
+import { DeviceMobileIcon, GlobeIcon, MoonIcon } from '@primer/octicons-react';
+import { Avatar, Box as BoxWrapper, Button, Octicon, Text, Tooltip, useTheme } from '@primer/react';
 import { useTranslation } from 'react-i18next';
 import { Box, Flex } from 'rebass';
 import { chatSidebarStateSelector } from '../../pages/Home/slice/chatSidebarSlice';
@@ -8,11 +8,12 @@ import { useAppSelector } from '../../store/hooks';
 const ChatScreenHeader = () => {
   const theme = useTheme();
   const { selectedChatUser } = useAppSelector(chatSidebarStateSelector);
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   return (
-    <Box
+    <BoxWrapper
       aria-label="chat-screen-header"
+      bg={theme.colorMode === 'day' ? theme.theme?.colors.white : theme.theme?.colors.darkMode.bg}
       sx={{
         borderBottom: `1px solid ${theme.theme?.colors.gray.light}`,
       }}
@@ -55,7 +56,30 @@ const ChatScreenHeader = () => {
           </Flex>
         </Flex>
 
-        <Box>
+        <Flex
+          sx={{
+            gap: theme.theme?.space[3],
+          }}
+          alignItems={'center'}>
+          <Tooltip direction="s" text={t('changeLanguage')}>
+            <Box
+              onClick={() => {
+                theme.setColorMode(theme.colorMode === 'day' ? 'night' : 'day');
+              }}>
+              <Octicon icon={MoonIcon} size={24} />
+            </Box>
+          </Tooltip>
+
+          <Tooltip direction="s" text={t('changeLanguage')}>
+            <Box
+              tabIndex={0}
+              onClick={() => {
+                i18n.changeLanguage(i18n.language === 'en' ? 'esp' : 'en');
+              }}>
+              <Octicon icon={GlobeIcon} size={24} />
+            </Box>
+          </Tooltip>
+
           <Button
             sx={{
               borderRadius: theme.theme?.radii.xs,
@@ -66,15 +90,12 @@ const ChatScreenHeader = () => {
               },
             }}
             leadingVisual={DeviceMobileIcon}
-            aria-label="Call User"
-            onClick={() => {
-              i18n.changeLanguage(i18n.language === 'en' ? 'de' : 'en');
-            }}>
+            aria-label="Call User">
             <Text color={theme.theme?.colors.primary.main}>Call</Text>
           </Button>
-        </Box>
+        </Flex>
       </Flex>
-    </Box>
+    </BoxWrapper>
   );
 };
 

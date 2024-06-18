@@ -108,7 +108,12 @@ router.post('/comments', async (ctx, next) => {
   // Notify all connected SSE clients about the new comment
   clients.forEach((client) => {
     try {
-      client.stream.write(`data: ${JSON.stringify(newComment)}\n\n`);
+      client.stream.write(
+        `data: ${JSON.stringify({
+          type: 'add',
+          data: newComment,
+        })}\n\n`
+      );
     } catch (error) {
       console.error(`Failed to send message to client ${client.id}:`, error);
     }
@@ -122,7 +127,22 @@ router.delete('/comment/:id', async (ctx, next) => {
   await fakeSleep(standardSleep);
   const { id } = ctx.params;
   try {
-    await deleteComment(await getComments(), id);
+    const deletedComment = await deleteComment(await getComments(), id);
+
+    // Notify all connected SSE clients about the new comment
+    clients.forEach((client) => {
+      try {
+        client.stream.write(
+          `data: ${JSON.stringify({
+            type: 'delete',
+            data: deletedComment,
+          })}\n\n`
+        );
+      } catch (error) {
+        console.error(`Failed to send message to client ${client.id}:`, error);
+      }
+    });
+
     ctx.body = true;
   } catch (err) {
     ctx.body = false;
@@ -145,7 +165,23 @@ router.put('/comment/:id', async (ctx, next) => {
   }
 
   try {
-    ctx.body = await editComment(await getComments(), { name, text, id });
+    const editedComment = await editComment(await getComments(), { name, text, id });
+
+    // Notify all connected SSE clients about the new comment
+    clients.forEach((client) => {
+      try {
+        client.stream.write(
+          `data: ${JSON.stringify({
+            type: 'edit',
+            data: editedComment,
+          })}\n\n`
+        );
+      } catch (error) {
+        console.error(`Failed to send message to client ${client.id}:`, error);
+      }
+    });
+
+    ctx.body = newComment;
   } catch (err) {
     ctx.throw(500, 'Internal server error');
   }

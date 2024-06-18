@@ -24,7 +24,13 @@ const ChatUser: React.FC<IChatUserProps> = ({ chatUser, selected }) => {
         theme.theme?.space[2],
         theme.theme?.space[3],
       ]}
-      backgroundColor={selected ? theme.theme?.colors?.gray?.bg : 'transparent'}>
+      backgroundColor={
+        selected
+          ? theme.colorMode === 'day'
+            ? theme.theme?.colors?.gray?.bg
+            : theme.theme?.colors.darkMode.bgLight
+          : theme.theme?.colors.white
+      }>
       <Box>
         <Avatar
           sx={{

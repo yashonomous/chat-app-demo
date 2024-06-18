@@ -26,7 +26,7 @@ const ChatsSidebar: React.FC = () => {
         theme.theme?.space[2],
         theme.theme?.space[3],
       ]}
-      // bg="red"
+      bg={theme.colorMode === 'day' ? theme.theme?.colors.white : theme.theme?.colors.darkMode.bg}
       flex={1}>
       <Flex
         sx={{

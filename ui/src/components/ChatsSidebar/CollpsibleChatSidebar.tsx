@@ -8,6 +8,7 @@ import {
 } from '../../pages/Home/slice/chatSidebarSlice';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import Input from '../common/Input/Input';
+import Overlay from '../common/Overlay/Overlay';
 import ChatUser from './ChatUser';
 import MessagesHeader from './MessagesHeader';
 
@@ -33,17 +34,10 @@ const SidebarContainer = emotionStyled.div<SidebarContainerProps>`
   transition: transform 0.3s ease-in-out;
 `;
 
-const Overlay = emotionStyled.div<SidebarContainerProps>`
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 9;
+const StyledOverlay = emotionStyled(Overlay)<SidebarContainerProps>`
   opacity: ${(props) => (props.isOpen ? 1 : 0)};
   visibility: ${(props) => (props.isOpen ? 'visible' : 'hidden')};
-  transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+
 `;
 
 const CollapsibleChatsSidebar: React.FC<IChatsSidebarProps> = ({
@@ -107,7 +101,7 @@ const CollapsibleChatsSidebar: React.FC<IChatsSidebarProps> = ({
         </Flex>
       </SidebarContainer>
 
-      <Overlay isOpen={showOverlaySidebar} tabIndex={0} onClick={handleOverlayClick} />
+      <StyledOverlay isOpen={showOverlaySidebar} tabIndex={0} onClick={handleOverlayClick} />
     </Box>
   );
 };

@@ -15,6 +15,7 @@ const ChatScreen: React.FC<ChatScreenProps> = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
+    dispatch(chatScreenSliceActions.setScrollToBottom(true));
     dispatch(chatScreenSliceActions.getMessagesAction());
 
     const createEventSource = () => {
@@ -27,8 +28,18 @@ const ChatScreen: React.FC<ChatScreenProps> = () => {
       eventSource.onmessage = (event) => {
         const parsedData = JSON.parse(event.data);
 
-        if (Object.keys(parsedData).length > 0 && parsedData.name !== user?.name) {
-          dispatch(chatScreenSliceActions.addMessage(parsedData));
+        if (
+          Object.keys(parsedData).length > 0 &&
+          parsedData.data.name &&
+          parsedData.data.name !== user?.name
+        ) {
+          if (parsedData.type === 'add') {
+            dispatch(chatScreenSliceActions.addMessage(parsedData.data));
+          } else if (parsedData.type === 'edit') {
+            dispatch(chatScreenSliceActions.editMessage(parsedData.data));
+          } else if (parsedData.type === 'delete') {
+            dispatch(chatScreenSliceActions.deleteMessage(parsedData.data.id));
+          }
         }
       };
 

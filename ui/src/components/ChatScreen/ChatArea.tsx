@@ -25,7 +25,7 @@ const AlwaysScrollToBottom = () => {
 
 const ChatArea = () => {
   const theme = useTheme();
-  const { messages } = useAppSelector(chatScreenStateSelector);
+  const { scrollToBotton, messages } = useAppSelector(chatScreenStateSelector);
 
   return (
     <Box
@@ -33,12 +33,16 @@ const ChatArea = () => {
       flexGrow={1}
       minHeight={0}
       padding={theme.theme?.space[2]}
+      bg={theme.colorMode === 'day' ? theme.theme?.colors.white : theme.theme?.colors.darkMode.bg}
       overflow={'auto'}>
       <FlipMove
         style={{
           display: 'flex',
           flexDirection: 'column',
           gap: theme.theme?.space[2],
+          background:
+            theme.colorMode === 'day' ? theme.theme?.colors.white : theme.theme?.colors.darkMode.bg,
+
           ...(messages.isLoading && {
             height: '100%',
             justifyContent: 'center',
@@ -58,7 +62,7 @@ const ChatArea = () => {
           messages.data?.map((message) => <Message key={message.id} message={message} />)
         )}
       </FlipMove>
-      <AlwaysScrollToBottom />
+      {scrollToBotton && <AlwaysScrollToBottom />}
     </Box>
   );
 };

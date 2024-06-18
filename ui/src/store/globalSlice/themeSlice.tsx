@@ -21,6 +21,10 @@ const initialState: Theme = {
     },
     white: '#fff',
     black: '#000',
+    darkMode: {
+      bg: '#202123',
+      bgLight: '#303135',
+    },
   },
   radii: {
     xs: '5px',
