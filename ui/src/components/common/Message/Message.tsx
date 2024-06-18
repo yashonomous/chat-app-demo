@@ -28,13 +28,14 @@ const Message: React.ForwardRefExoticComponent<IMessageProps & RefAttributes<HTM
     const [showActions, setShowActions] = useState(false);
 
     const handleMessageDelete = () => {
+      dispatch(chatScreenSliceActions.setScrollToBottom(false));
       dispatch(chatScreenSliceActions.deleteMessage(message.id));
       dispatch(chatScreenSliceActions.deleteMessageAction(message.id));
     };
 
     const handleMessageEdit = () => {
-      dispatch(chatScreenSliceActions.setCurrentMessageToEdit(message));
       dispatch(chatScreenSliceActions.setScrollToBottom(false));
+      dispatch(chatScreenSliceActions.setCurrentMessageToEdit(message));
 
       // dispatch(chatScreenSliceActions.editMessageAction(message));
     };

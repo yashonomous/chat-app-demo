@@ -23,6 +23,8 @@ const SendMessage = () => {
     e.preventDefault();
 
     if (!currentMessageToEdit) {
+      dispatch(chatScreenSliceActions.setScrollToBottom(true));
+
       const oldId = 'message' + Math.random();
       dispatch(
         chatScreenSliceActions.postMessageAction({

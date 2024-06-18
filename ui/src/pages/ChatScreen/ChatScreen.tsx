@@ -34,10 +34,13 @@ const ChatScreen: React.FC<ChatScreenProps> = () => {
           parsedData.data.name !== user?.name
         ) {
           if (parsedData.type === 'add') {
+            dispatch(chatScreenSliceActions.setScrollToBottom(true));
             dispatch(chatScreenSliceActions.addMessage(parsedData.data));
           } else if (parsedData.type === 'edit') {
+            dispatch(chatScreenSliceActions.setScrollToBottom(false));
             dispatch(chatScreenSliceActions.editMessage(parsedData.data));
           } else if (parsedData.type === 'delete') {
+            dispatch(chatScreenSliceActions.setScrollToBottom(false));
             dispatch(chatScreenSliceActions.deleteMessage(parsedData.data.id));
           }
         }
